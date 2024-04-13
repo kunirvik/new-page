@@ -155,13 +155,75 @@ a {
   color: inherit;
 }
 
-@media (max-width:600px){
+.modal{
+  width: 600px;
+  background-color: rgba(98, 98, 199, 0.767);
+}
+
+
+
+h1 {
+  color: #333;
+  text-align: center;
+}
+.contact-info {
+  margin-top: 20px;
+}
+.contact-info p {
+  margin: 10px 0;
+  color: #555;
+}
+.contact-info p strong {
+  font-weight: bold;
+}
+.contact-info .email {
+  color: #007bff;
+  text-decoration: none;
+}
+.contact-info .email:hover {
+  text-decoration: underline;
+}
+.contact-info .phone {
+  color: #28a745;
+}
+
+
+@media (max-width:600px){.container {
+  
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #000000;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 .layout{
 
-  overflow-x: auto;
+
+
+}
+.slides-wrapper {
+  flex-direction: row; /* Изменяем направление на горизонтальное */
+  overflow-x: auto; /* Добавляем горизонтальный скролл */
+  overflow-y: hidden; /* Скрыть вертикальный скролл, если есть */
+  -webkit-overflow-scrolling: touch; /* Поддержка плавного скролла на устройствах iOS */
 }
 .text{
   font-size:15vw ;
 }
+.footer{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+position: fixed;
+bottom: 0;
+margin: 0;
+width: 100%;
+height: max-content;
+color: #cf0505;
+
+ }
   
 }
