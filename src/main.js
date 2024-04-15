@@ -1,7 +1,7 @@
 import { createModal } from "./js/createModal";
 import { gsap } from "gsap";  
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import  'basiclightbox/dist/basiclightbox.min.css';
+
 // Correct import for ScrollTrigger
 
 // Register ScrollTrigger plugin1
