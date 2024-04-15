@@ -1,9 +1,10 @@
 import * as basicLightbox from 'basiclightbox';
+import  'basiclightbox/dist/basicLightbox.min.css';
 import {closeModal} from './closeModal';
 
-    console.log("клик")
-function createModal () {const instance = basicLightbox.create(`
 
+function createModal () {const instance = basicLightbox.create(`
+   
      <div class="modal">
   
      <div class="container">
