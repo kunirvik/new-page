@@ -38,12 +38,13 @@ let tl1 = gsap.timeline({
 		end: () => '+=' + containerWidth , 
 		anticipatePin: 1, 
 		invalidateOnRefresh: true, 
+		
 	}
 	
 })
 	
 tl1.to( slides, {
-	xPercent: -110 * (slides.length - 1),
+	xPercent: -110 * (slides.length - 4),
 	
 })	
 	},
@@ -58,9 +59,9 @@ tl1.to( slides, {
 				trigger: container, 
 				pin: true, 
 				scrub: 1, 
-				start:'top 20',
+				start:'top ',
 				ease: "none", 
-				end: () => '+=' + (containerWidth * 2), 
+				end: () => '+=' + (containerWidth * 10), 
 				anticipatePin: 1, 
 				invalidateOnRefresh: true, 
 			}

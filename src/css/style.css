@@ -102,7 +102,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   height: 50vh;
 }
 
@@ -156,9 +156,25 @@ a {
   color: inherit;
 }
 
+
+
+.close-button{
+  background-color: #000000;
+  color: white;
+  font-family: 'Futura PT Bold';
+  font-size: 50px;
+}
+.modal-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
 .modal{
 
   width: 600px;
+
   background-color: rgba(15, 15, 17, 0.886);
   color: aliceblue;
 }
