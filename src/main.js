@@ -2,6 +2,8 @@ import { createModal } from "./js/createModal";
 import { gsap } from "gsap";  
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import  'basiclightbox/dist/basicLightbox.min.css';
+import { closeModal } from "./js/closeModal";
+
 // Correct import for ScrollTrigger
 
 // Register ScrollTrigger plugin1
@@ -11,19 +13,30 @@ gsap.registerPlugin(ScrollTrigger);
 
 const container = document.querySelector('.layout');
 const slides = document.querySelectorAll('.slide');
-const contact = document.querySelector('.text')
+const contact = document.querySelector('.container');
 const containerWidth = container.offsetWidth;
+
+
+
 contact.addEventListener('click', onClick);
 function onClick(evt){	
 	evt.preventDefault();
 	if(evt.target.classList.contains('js-contact')){
-		
+		console.log('Navigating');
 	  createModal()
-	  
 	  }
+	  
+	if(evt.target.classList.contains('js-model')){
 
+		console.log('Navigating to page.html');
+		window.location.href = 'page.html';
+	}
 
 }
+
+
+
+
 
 ScrollTrigger.matchMedia({
 	"(min-width: 800px)": function() {
@@ -61,7 +74,7 @@ tl1.to( slides, {
 				scrub: 1, 
 				start:'top ',
 				ease: "none", 
-				end: () => '+=' + (containerWidth * 10), 
+				end: () => '+=' + (containerWidth * 1), 
 				anticipatePin: 1, 
 				invalidateOnRefresh: true, 
 			}
@@ -69,7 +82,7 @@ tl1.to( slides, {
 		})
 			
 		tl2.to( slides, {
-			xPercent: -110 * (slides.length - 1)
+			xPercent: -110 * (slides.length - 4)
 		})	
 
 	}

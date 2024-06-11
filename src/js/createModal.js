@@ -22,11 +22,14 @@ function createModal () {const instance = basicLightbox.create(`
         handler:null,
         onShow() {
       this.handler = closeModal.bind(instance);
+         
         document.addEventListener('keydown', this.handler);
+        document.addEventListener('click', this.handler)
 
     },
     onClose(){
-        document.removeEventListener('keydown', this.handler)
+        document.removeEventListener('keydown', this.handler);
+        document.removeEventListener('click', this.handler)
     }
     });
     instance.show()
