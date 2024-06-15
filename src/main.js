@@ -71,6 +71,7 @@ const images = [
       description: "Lighthouse Coast Sea",
     },
     
+    
   ];
 
   const markup = images.map(({preview, original, description}) => 
