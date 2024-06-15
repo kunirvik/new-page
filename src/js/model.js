@@ -586,7 +586,7 @@ function main() {
   );
   new SceneManager(
     '#c3',
-    'new-page/bowl.glb',
+    '/models/bowl.glb',
     {
       fov: 45,
       near: 0.1,
