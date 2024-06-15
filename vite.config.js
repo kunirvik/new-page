@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import glob from 'glob';
 import injectHTML from 'vite-plugin-html-inject';
 import FullReload from 'vite-plugin-full-reload';
+import path from 'path';
 
 export default defineConfig(({ command }) => {
   return {
@@ -9,9 +10,14 @@ export default defineConfig(({ command }) => {
       [command === 'serve' ? 'global' : '_global']: {},
     },
     root: 'src',
+    resolve: {
+      alias: {
+        // Используем абсолютный путь к папке models
+        '@models': path.resolve(__dirname, 'src/models'),
+      },
+    },
     build: {
       sourcemap: true,
-
       rollupOptions: {
         input: glob.sync('./src/*.html'),
         output: {
@@ -26,6 +32,13 @@ export default defineConfig(({ command }) => {
       outDir: '../dist',
       emptyOutDir: true,
     },
-    plugins: [injectHTML(), FullReload(['./src/**/**.html'])],
+    // Перечисляем зависимости для оптимизации
+    optimizeDeps: {
+      include: ['three', 'three/examples/jsm/loaders/GLTFLoader.js']
+    },
+    plugins: [
+      injectHTML(),
+      FullReload(['./src/**/**.html']),
+    ],
   };
 });
