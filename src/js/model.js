@@ -564,7 +564,7 @@ function main() {
   console.log('Запуск main функции');
   new SceneManager(
     '#c1',
-    'models/mini.glb',
+    '/mini.glb',
     {
       fov: 0,
       near: 0.1,
@@ -575,7 +575,7 @@ function main() {
   );
   new SceneManager(
     '#c2',
-    'models/box.glb',
+    '/box.glb',
     {
       fov: 45,
       near: 0.1,
@@ -586,7 +586,7 @@ function main() {
   );
   new SceneManager(
     '#c3',
-    '/models/bowl.glb',
+    '/bowl.glb',
     {
       fov: 45,
       near: 0.1,
@@ -597,7 +597,7 @@ function main() {
   );
   new SceneManager(
     '#c4',
-    'models/logo.glb',
+    '/logo.glb',
     {
       fov: 50,
       near: 0.1,
