@@ -227,7 +227,7 @@ a {
 .modal {
   width: 600px;
   background-color: rgba(15, 15, 17, 0.886);
-  color: aliceblue;
+  color: rgba(0, 0, 0, 0.479);
 }
 
 /* Контактная информация */
