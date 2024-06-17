@@ -564,7 +564,7 @@ function main() {
   console.log('Запуск main функции');
   new SceneManager(
     '#c1',
-    'mini.glb',
+    'new-page/mini.glb',
     {
       fov: 0,
       near: 0.1,
@@ -575,7 +575,7 @@ function main() {
   );
   new SceneManager(
     '#c2',
-    'box.glb',
+    'new-page/box.glb',
     {
       fov: 45,
       near: 0.1,
@@ -586,7 +586,7 @@ function main() {
   );
   new SceneManager(
     '#c3',
-    'bowl.glb',
+    'new-page/bowl.glb',
     {
       fov: 45,
       near: 0.1,
@@ -597,7 +597,7 @@ function main() {
   );
   new SceneManager(
     '#c4',
-    'logo.glb',
+    'new-page/logo.glb',
     {
       fov: 50,
       near: 0.1,
@@ -623,35 +623,29 @@ main();
 
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  const texts = [
-      {
-          elementId: "typewriter",
-          text: "Это пример текста, который будет печататься как на печатной машинке. Привет, мир! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur quidem commodi, natus iste dolorum sequi consequuntur quis, ut, facere est obcaecati ex quia ratione ab voluptatem dolor quasi animi quae."
-      },
-      {
-          elementId: "typewriter2",
-          text: "Это второй текст для демонстрации печатной машинки. Он тоже будет печататься по одному символу за раз."
-      },
-      {
-        elementId: "typewriter3",
-        text: "Это второй текст для демонстрации печатной машинки. Он тоже будет печататься по одному символу за раз."
+const typeWriterTexts = [
+  { elementId: 'heroText', text: 'Hello, welcome to my website!' },
+  { elementId: 'projectsText', text: 'Here are some of my projects.' },
+  { elementId: 'contactsText', text: 'Feel free to contact me!' }
+];
+
+function typeWriter(element, text, speed, callback) {
+  let i = 0;
+  function typing() {
+    if (i < text.length) {
+      element.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typing, speed);
+    } else if (callback) {
+      callback();
     }
+  }
+  typing();
+}
 
-  ];
-  const speed = 10; // Скорость печати в миллисекундах
-
-  texts.forEach(({ elementId, text }) => {
-      let i = 0;
-
-      function typeWriter() {
-          if (i < text.length) {
-              document.getElementById(elementId).innerHTML += text.charAt(i);
-              i++;
-              setTimeout(typeWriter, speed);
-          }
-      }
-
-      typeWriter();
-  });
+typeWriterTexts.forEach((item) => {
+  const element = document.getElementById(item.elementId);
+  if (element) {
+    typeWriter(element, item.text, 50);
+  }
 });
