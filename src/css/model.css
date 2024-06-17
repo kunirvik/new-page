@@ -164,3 +164,15 @@ right: 0;
     animation-duration: 0.2s;
     animation-timing-function: linear;
   }
+
+  @media (max-width: 600px) {
+    #c4{
+     
+    }
+    canvas {
+      margin: 0 auto;
+      padding: 0;
+      width: 100%;
+      height: auto;
+    }
+  }

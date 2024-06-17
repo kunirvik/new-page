@@ -564,7 +564,7 @@ function main() {
   console.log('Запуск main функции');
   new SceneManager(
     '#c1',
-    'new-page/mini.glb',
+    'mini.glb',
     {
       fov: 0,
       near: 0.1,
@@ -575,7 +575,7 @@ function main() {
   );
   new SceneManager(
     '#c2',
-    'new-page/box.glb',
+    'box.glb',
     {
       fov: 45,
       near: 0.1,
@@ -586,7 +586,7 @@ function main() {
   );
   new SceneManager(
     '#c3',
-    'new-page/bowl.glb',
+    'bowl.glb',
     {
       fov: 45,
       near: 0.1,
@@ -597,7 +597,7 @@ function main() {
   );
   new SceneManager(
     '#c4',
-    'new-page/logo.glb',
+    'logo.glb',
     {
       fov: 50,
       near: 0.1,
@@ -612,7 +612,11 @@ function main() {
       transmission: 1,
       opacity: 0.5,
       thickness: 0.1,
-      ior: 1.5
+      ior: 1.5,
+      transparent: true,
+      clearColor: 0x000000, // Черный цвет фона
+    clearAlpha: 0, // Устанавливаем прозрачность фона
+    alpha: true
     }
   );
   animate();
