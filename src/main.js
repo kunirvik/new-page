@@ -120,7 +120,7 @@ function onClick(evt){
 	if(evt.target.classList.contains('js-model')){
 
 		console.log('Navigating to page.html');
-		window.location.href = 'page.html';
+		window.location.href = 'html/page.html';
 	}
 
 }

@@ -333,7 +333,7 @@ new Menu();
 let sceneManagers = [];
 
 class SceneManager {
-  constructor(canvasId, modelPath, cameraSettings, modelPosition, materialSettings) {
+  constructor(canvasId, modelPath, cameraSettings, modelPosition, materialSettings, textureSettings) {
     console.log(`Инициализация SceneManager для canvasId: ${canvasId} и modelPath: ${modelPath}`);
     this.canvas = document.querySelector(canvasId);
     if (!this.canvas) {
@@ -362,7 +362,7 @@ class SceneManager {
     console.log('Сцена успешно инициализирована');
 
     this.addLights();
-    this.loadModel(modelPath, modelPosition, materialSettings);
+    this.loadModel(modelPath, modelPosition, materialSettings, textureSettings);
 
     this.isMouseOver = false;
     this.continueRotationUntil = 0;
@@ -394,7 +394,7 @@ class SceneManager {
     console.log('Освещение добавлено');
   }
 
-  loadModel(modelPath, modelPosition, materialSettings) {
+  loadModel(modelPath, modelPosition, materialSettings, textureSettings) {
     console.log(`Пытаемся загрузить модель из ${modelPath}`);
     const gltfLoader = new GLTFLoader();
     gltfLoader.load(modelPath, (gltf) => {
@@ -420,7 +420,7 @@ class SceneManager {
       console.log('Добавляем объект в сцену');
 
       if (materialSettings) {
-        this.applyMaterialSettings(this.model, materialSettings);
+        this.applyMaterialSettings(this.model, materialSettings, textureSettings);
       }
 
       this.initialRotation = this.modelGroup.rotation.clone();
@@ -430,22 +430,38 @@ class SceneManager {
     });
   }
 
-  applyMaterialSettings(model, settings) {
+  applyMaterialSettings(model, materialSettings, textureSettings) {
     model.traverse((child) => {
       if (child.isMesh) {
-        child.material = new THREE.MeshPhysicalMaterial({
-          color: settings.color || 0xffffff,
-          metalness: settings.metalness || 0,
-          roughness: settings.roughness || 0,
-          transmission: settings.transmission || 1,
-          opacity: settings.opacity || 0.5,
+        const materialParams = {
+          color: materialSettings.color || 0xffffff,
+          metalness: materialSettings.metalness || 0,
+          roughness: materialSettings.roughness || 0,
+          transmission: materialSettings.transmission || 1,
+          opacity: materialSettings.opacity || 0.5,
           transparent: true,
-          thickness: settings.thickness || 0.1,
-          envMap: settings.envMap || null,
-          ior: settings.ior || 1.5,
-        });
+          thickness: materialSettings.thickness || 0.1,
+          envMap: materialSettings.envMap || null,
+          ior: materialSettings.ior || 1.5,
+        };
+
+        if (textureSettings) {
+          if (textureSettings.map) materialParams.map = this.loadTexture(textureSettings.map);
+          if (textureSettings.metalnessMap) materialParams.metalnessMap = this.loadTexture(textureSettings.metalnessMap);
+          if (textureSettings.roughnessMap) materialParams.roughnessMap = this.loadTexture(textureSettings.roughnessMap);
+          if (textureSettings.normalMap) materialParams.normalMap = this.loadTexture(textureSettings.normalMap);
+          if (textureSettings.alphaMap) materialParams.alphaMap = this.loadTexture(textureSettings.alphaMap);
+          if (textureSettings.envMap) materialParams.envMap = this.loadTexture(textureSettings.envMap);
+        }
+
+        child.material = new THREE.MeshPhysicalMaterial(materialParams);
       }
     });
+  }
+
+  loadTexture(path) {
+    const textureLoader = new THREE.TextureLoader();
+    return textureLoader.load(path);
   }
 
   onMouseMove(event) {
@@ -564,7 +580,7 @@ function main() {
   console.log('Запуск main функции');
   new SceneManager(
     '#c1',
-    'mini.glb',
+    '/models/mini.glb',
     {
       fov: 0,
       near: 0.1,
@@ -572,39 +588,57 @@ function main() {
       position: { x: 0, y: 5, z: 20 }
     },
     { x: 10, y: 0, z: 0 },
+    {
+      color: 0xffffff,
+      metalness: 0.9,
+      roughness: 0.8,
+      transmission: 0.9,
+      opacity: 0.5,
+      thickness: 0.1,
+      ior: 1.5,
+      transparent: true,
+      clearColor: 0x00000, // Черный цвет фона
+      clearAlpha: 0, // Устанавливаем прозрачность фона
+      alpha: true
+    },
+  
   );
   new SceneManager(
     '#c2',
-    'box.glb',
+    '/models/mini.glb',
     {
-      fov: 45,
+      fov: 0,
       near: 0.1,
-      far: 400,
-      position: { x: 0, y: 0, z: 50 }
+      far: 500,
+      position: { x: 0, y: 5, z: 20 }
     },
     { x: 10, y: 0, z: 0 },
+    null,
+    {
+     
+    }
   );
   new SceneManager(
     '#c3',
-    'bowl.glb',
+    '/models/mini.glb',
     {
-      fov: 45,
+      fov: 0,
       near: 0.1,
-      far: 400,
-      position: { x: 0, y: 0, z: 50 }
+      far: 500,
+      position: { x: 0, y: 5, z: 20 }
     },
-    { x: 10, y: 0, z: 0 },
+    { x: 10, y: 0, z: 0 }
   );
   new SceneManager(
     '#c4',
-    'logo.glb',
+    '/models/logo.glb',
     {
-      fov: 50,
+      fov: 0,
       near: 0.1,
-      far: 0,
-      position: { x: 250, y: 0, z:400 }
+      far: 500,
+      position: { x: 0, y: 5, z: 200 }
     },
-    { x: 0, y: 0, z:  0 },
+    { x: 0, y: 0, z: 0 },
     {
       color: 0xffffff,
       metalness: 1,
@@ -615,14 +649,23 @@ function main() {
       ior: 1.5,
       transparent: true,
       clearColor: 0x000000, // Черный цвет фона
-    clearAlpha: 0, // Устанавливаем прозрачность фона
-    alpha: true
+      clearAlpha: 0, // Устанавливаем прозрачность фона
+      alpha: true
+    },
+    {
+      map: '/models/park.png',
+      // metalnessMap: 'path/to/metalness.jpg',
+      // roughnessMap: 'path/to/roughness.jpg',
+      // normalMap: 'path/to/normal.jpg',
+      // alphaMap: 'path/to/alpha.jpg',
+      // envMap: 'path/to/env.jpg'
     }
   );
   animate();
 }
 
 main();
+
 
 
 
