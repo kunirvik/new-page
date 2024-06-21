@@ -117,11 +117,11 @@ function onClick(evt){
 	  createModal()
 	  }
 	  
-	// if(evt.target.classList.contains('js-model')){
+	if(evt.target.classList.contains('js-model')){
 
-	// 	console.log('Navigating to page.html');
-	// 	window.location.href = './html/page.html';
-	// }
+		console.log('Navigating to page.html');
+		window.location.href = 'html/page.html';
+	}
 
 }
 
