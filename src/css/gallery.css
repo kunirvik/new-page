@@ -1,0 +1,74 @@
+.block1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
+
+.text {
+    perspective: 1000px; /* Устанавливает перспективу для 3D-преобразований */
+}
+
+.text-container {
+    position: relative;
+
+    transform-style: preserve-3d; /* Сохраняет 3D-преобразования для детей */
+    transition: transform 0.6s cubic-bezier(.1, .5, .5, 1); /* Плавная анимация */
+}
+
+.text-front,
+.text-back {
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5vw;
+    letter-spacing: -.01em;
+    line-height: 100%;
+    margin: 0;
+    cursor: pointer;
+    color: rgba(182, 182, 182, 0.8);
+    backface-visibility: hidden; /* Скрывает обратную сторону элемента */
+    border-bottom: 1px solid #2F2B28;
+}
+
+.text-front {
+    background-color: #4246ce; /* Фон переднего текста */
+}
+
+.text-back {
+    background-color: #ce4246; /* Фон заднего текста */
+    transform: rotatex(180deg); /* Поворачивает задний текст на 180 градусов */
+}
+
+.text:hover .text-container {
+    transform: rotatex(180deg); /* Поворачивает контейнер при наведении */
+}
+
+
+.gallery {
+    height: 43vh;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: end;
+    gap: 30px;
+  }
+  
+  .gallery__item {
+    display: flex;
+    margin: 0 auto;
+    flex: 1 1 auto; 
+  }
+  
+  .gallery__image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    min-width: 25vw;
+    min-height: 25vh;
+  }

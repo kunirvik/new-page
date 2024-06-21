@@ -16,6 +16,7 @@ export default defineConfig(({ command }) => {
         '@models': path.resolve(__dirname, 'src/models'),
       },
     },
+    base:'/new-page/',
     build: {
       sourcemap: true,
       rollupOptions: {
@@ -26,7 +27,7 @@ export default defineConfig(({ command }) => {
               return 'vendor';
             }
           },
-          entryFileNames: 'commonHelpers.js',
+          entryFileNames: '[name].js',
         },
       },
       outDir: '../dist',

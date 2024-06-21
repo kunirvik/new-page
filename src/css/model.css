@@ -31,10 +31,12 @@
     font-family: 'Futura PT Bold';
   }
     main { display: flex;
-    flex-wrap: wrap; }
+    flex-wrap: wrap;
+  margin: 0 0 0 5vw; }
 
 
-.text{  flex: 1 1 200px; /* Базовая ширина 200px и возможность сжиматься */
+.text{ display: flex;
+   flex: 1 1 200px; /* Базовая ширина 200px и возможность сжиматься */
     margin: 10px;
     background-color: rgb(0, 0, 0);
     padding: 20px;
@@ -79,7 +81,13 @@ canvas{
     
   }
 #c4{
-margin: 0 auto;
+
+  bottom: 0;
+ 
+width: 10vw;
+margin: 0 0;
+position: fixed;
+
 
 
 }

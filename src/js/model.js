@@ -340,7 +340,7 @@ class SceneManager {
       console.error(`Canvas с ID ${canvasId} не найден`);
       return;
     }
-    this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas, antialias: true });
+    this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas, antialias: true, alpha: true });
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
     console.log('Renderer успешно инициализирован');
@@ -580,7 +580,7 @@ function main() {
   console.log('Запуск main функции');
   new SceneManager(
     '#c1',
-    '/models/mini.glb',
+    '../models/mini.glb',
     {
       fov: 0,
       near: 0.1,
@@ -605,7 +605,7 @@ function main() {
   );
   new SceneManager(
     '#c2',
-    '/models/mini.glb',
+    '../models/mini.glb',
     {
       fov: 0,
       near: 0.1,
@@ -620,7 +620,7 @@ function main() {
   );
   new SceneManager(
     '#c3',
-    '/models/mini.glb',
+    '../models/mini.glb',
     {
       fov: 0,
       near: 0.1,
@@ -631,29 +631,29 @@ function main() {
   );
   new SceneManager(
     '#c4',
-    '/models/logo.glb',
+    '../models/logo.glb',
     {
       fov: 0,
       near: 0.1,
       far: 500,
-      position: { x: 0, y: 5, z: 200 }
+      position: { x: 0, y: 50, z:200  }
     },
-    { x: 0, y: 0, z: 0 },
+    { x: 0, y: 0, z: 50 },
     {
       color: 0xffffff,
-      metalness: 1,
-      roughness: 1,
-      transmission: 1,
-      opacity: 0.5,
+      metalness: 0.8,
+      roughness: 0.9,
+      transmission: 0.5,
+      opacity: 0.7,
       thickness: 0.1,
       ior: 1.5,
       transparent: true,
-      clearColor: 0x000000, // Черный цвет фона
-      clearAlpha: 0, // Устанавливаем прозрачность фона
+      // clearColor: 0x000000, // Черный цвет фона
+      // clearAlpha: 0, // Устанавливаем прозрачность фона
       alpha: true
     },
     {
-      map: '/models/park.png',
+      map: '../models/park.png',
       // metalnessMap: 'path/to/metalness.jpg',
       // roughnessMap: 'path/to/roughness.jpg',
       // normalMap: 'path/to/normal.jpg',
