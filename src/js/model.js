@@ -1,120 +1,12 @@
-// import * as THREE from 'three';
-// import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-// // import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
-// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-
-// function main() {
-//   const canvas = document.querySelector('#c');
-//   const renderer = new THREE.WebGLRenderer({canvas});
-
-//   const fov = 50;
-//   const aspect = 2;  //холст по умолчанию
-//   const near = 0.1;
-//   const far = 600;
-//   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-//   camera.position.set(50, 50, 100);
-
-//   const controls = new OrbitControls(camera, canvas);
-//   controls.target.set(0, 0, 0);
-//   controls.update();  
-
-
-//   const scene = new THREE.Scene();
-//   scene.background = new THREE.Color('black');
-
-
-//   {
-//     const skyColor = 0x4779F4;  // светло-синий
-//     const groundColor = 0x9E9E9E;  // коричневато-оранжевый
-//     const intensity = 1;
-//     const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
-//     scene.add(light);
-//   }
-
-//   {
-//     const color = 0x2DEF83;
-//     const intensity = 1;
-//     const light = new THREE.DirectionalLight(color, intensity);
-//     light.position.set(0, 10, 0);
-//     light.target.position.set(-5, 0, 0);
-//     scene.add(light);
-//     scene.add(light.target);
-//   }
- 
-
-//   let ourObj;
-  
-//   const toRadians = (degrees) => degrees * (Math.PI / 180);
-//   {
-//     const gltfLoader = new GLTFLoader();
-//     const gltfPath = '/bowl.glb'; // Убедитесь, что путь правильный
-//     console.log(`Пытаемся загрузить ${gltfPath}`);
-//     gltfLoader.load(gltfPath, (gltf) => {
-//       console.log('Объект успешно загружен');
-//       ourObj = gltf.scene;
-//       scene.add(ourObj);
-//       ourObj.rotation.y = toRadians(10);
-//       ourObj.scale.set(0.5, 0.5, 0.5);
-
-//     }, undefined, (error) => {
-//       console.error(`Произошла ошибка при загрузке ${gltfPath}`, error);
-//     });
-
-
-//   }
-
-
-//   {
-//     const gltfLoader = new GLTFLoader();
-//     const gltfPath2 = '/mini.glb'; // Убедитесь, что путь правильный
-//     console.log(`Пытаемся загрузить ${gltfPath2}`);
-//     gltfLoader.load(gltfPath2, (gltf) => {
-//       console.log('Второй объект успешно загружен');
-//       const secondObj = gltf.scene;
-//       scene.add(secondObj);
-//       secondObj.position.set(30, 30, 0); // Устанавливаем позицию второго объекта
-//     }, undefined, (error) => {
-//       console.error(`Произошла ошибка при загрузке ${gltfPath2}`, error);
-//     });
-//   }
-  
-//   function resizeRendererToDisplaySize(renderer) {
-//     const canvas = renderer.domElement;
-//     const width = canvas.clientWidth;
-//     const height = canvas.clientHeight;
-//     const needResize = canvas.width !== width || canvas.height !== height;
-//     if (needResize) {
-//       renderer.setSize(width, height, false);
-//     }
-//     return needResize;
-//   }
-
-//   function render() {
-
-//     if (resizeRendererToDisplaySize(renderer)) {
-//       const canvas = renderer.domElement;
-//       camera.aspect = canvas.clientWidth / canvas.clientHeight;
-//       camera.updateProjectionMatrix();
-//     }
- 
-//     renderer.render(scene, camera);
-
-    
-//     requestAnimationFrame(render);
-
-
-//     renderer.render(scene, camera);
-//   }
-
-//   requestAnimationFrame(render);
-// }
-
-// main();
 "use strict";
 import * as THREE from 'three';
+
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import * as basicLightbox from 'basiclightbox';
+import  'basiclightbox/dist/basicLightbox.min.css';
+import {closeModal} from './closeModal';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 
 class Menu {
@@ -329,7 +221,6 @@ new Menu();
 
 
 
-
 let sceneManagers = [];
 
 class SceneManager {
@@ -374,6 +265,20 @@ class SceneManager {
 
     window.addEventListener('resize', () => this.onWindowResize(), false);
 
+    this.intersectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          this.loadModel(modelPath, modelPosition, materialSettings, textureSettings); // Загружаем модель, когда canvas попадает в область видимости
+          this.intersectionObserver.unobserve(this.canvas); // Прекращаем наблюдение после загрузки
+        }
+      });
+    }, {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    });
+
+    this.intersectionObserver.observe(this.canvas);
     sceneManagers.push(this);
   }
 
@@ -395,6 +300,11 @@ class SceneManager {
   }
 
   loadModel(modelPath, modelPosition, materialSettings, textureSettings) {
+    if (!modelPath) {
+      console.error('Путь к модели не указан');
+      return;
+    }
+
     console.log(`Пытаемся загрузить модель из ${modelPath}`);
     const gltfLoader = new GLTFLoader();
     gltfLoader.load(modelPath, (gltf) => {
@@ -509,6 +419,8 @@ class SceneManager {
 
     if (this.canvas.id === 'c4') {
       this.specialRenderForC4(delta);
+    } else if (this.canvas.id === 'c5') {
+      this.specialRenderForC5(delta);
     } else {
       this.defaultRender(delta);
     }
@@ -539,6 +451,16 @@ class SceneManager {
         }
       }
     }
+  }
+
+  specialRenderForC5(delta) {
+    if (!this.controls) {
+      this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+      this.controls.enableDamping = true;
+      this.controls.dampingFactor = 0.25;
+      this.controls.enableZoom = true;
+    }
+    this.controls.update();
   }
 
   specialRenderForC4(delta) {
@@ -600,8 +522,7 @@ function main() {
       clearColor: 0x00000, // Черный цвет фона
       clearAlpha: 0, // Устанавливаем прозрачность фона
       alpha: true
-    },
-  
+    }
   );
   new SceneManager(
     '#c2',
@@ -614,9 +535,7 @@ function main() {
     },
     { x: 10, y: 0, z: 0 },
     null,
-    {
-     
-    }
+    {}
   );
   new SceneManager(
     '#c3',
@@ -636,7 +555,7 @@ function main() {
       fov: 0,
       near: 0.1,
       far: 500,
-      position: { x: 0, y: 50, z:200  }
+      position: { x: 0, y: 50, z: 200 }
     },
     { x: 0, y: 0, z: 50 },
     {
@@ -661,13 +580,91 @@ function main() {
       // envMap: 'path/to/env.jpg'
     }
   );
+
   animate();
 }
 
 main();
 
 
+const modalModel = document.querySelector('.model1');
+modalModel.addEventListener( 'click', clickModel );
 
+function clickModel(evt){
+  evt.preventDefault();
+	if(evt.target.classList.contains('model1')){
+		console.log('Navigating');
+	  createModalModel()
+	  }
+
+}
+function createModalModel(){
+  
+  {const instance = basicLightbox.create(`
+   
+    <div class="modal">
+ 
+    <div class="modal-container">
+
+    <button class="close-button">X</button>
+
+    
+    <h1>Наши контакты</h1>
+
+    <div class="contact-info">
+        <p><strong>Адрес:</strong> 123 улица, Город, Страна, Почтовый индекс</p>
+        <p><strong>Телефон: +380961383642</strong> <span class="phone">+7 (123) 456-7890</span></p>
+        <p><strong>Email:</strong> <a href="mailto:info@example.com" class="email">info@example.com</a></p>
+    </div>
+<canvas class="model5" id="c5"><canvas>
+   </div>
+   </div>
+   `,{
+       handler:null,
+       onShow() {
+     this.handler = closeModal.bind(instance);
+        
+       document.addEventListener('keydown', this.handler);
+       document.addEventListener('click', this.handler);
+       setTimeout(() => {
+        new SceneManager('#c5', '../models/mini.glb', {
+          fov: 0,
+          near: 0.1,
+          far: 500,
+          position: { x: 0, y: 5, z: 20 }
+        },
+        { x: 10, y: 0, z: 0 },
+        {
+          color: 0xffffff,
+          metalness: 0.9,
+          roughness: 0.8,
+          transmission: 0.9,
+          opacity: 0.5,
+          thickness: 0.1,
+          ior: 1.5,
+          transparent: true,
+          clearColor: 0x00000, // Черный цвет фона
+          clearAlpha: 0, // Устанавливаем прозрачность фона
+          alpha: true
+        }, null, null);
+      }, 0); 
+
+   },
+   onClose(){
+       document.removeEventListener('keydown', this.handler);
+       document.removeEventListener('click', this.handler)
+   }
+   });
+   instance.show()
+   
+
+  
+
+}
+
+
+  
+}
 
 
 const typeWriterTexts = [
@@ -696,3 +693,7 @@ typeWriterTexts.forEach((item) => {
     typeWriter(element, item.text, 50);
   }
 });
+
+
+
+

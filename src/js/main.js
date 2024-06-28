@@ -1,8 +1,8 @@
-import { createModal } from "./js/createModal";
+import { createModal } from "./createModal";
 import { gsap } from "gsap";  
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import  'basiclightbox/dist/basicLightbox.min.css';
-import { closeModal } from "./js/closeModal";
+import { closeModal } from "./closeModal";
 
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
@@ -120,7 +120,7 @@ function onClick(evt){
 	if(evt.target.classList.contains('js-model')){
 
 		console.log('Navigating to page.html');
-		window.location.href = './html/model.html';
+		window.location.href = './model.html';
 	}
 
 }
@@ -156,27 +156,4 @@ tl1.to( slides, {
 })
 	
 	
-	// "(max-width: 799px) and (max-height: 899px)": function() {
-	
-	// 	let tl2 = gsap.timeline({	
-	// 		scrollTrigger: {
-	// 			markers:true,
-	// 			trigger: container, 
-	// 			pin: true, 
-	// 			scrub: 1, 
-	// 			start:'top ',
-	// 			ease: "none", 
-	// 			end: () => '+=' + (containerWidth * 1), 
-	// 			anticipatePin: 1, 
-	// 			invalidateOnRefresh: true, 
-	// 		}
-			
-	// 	})
-			
-	// 	tl2.to( slides, {
-	// 		xPercent: -110 * (slides.length - 4)
-	// 	})	
 
-	// }
-
-	

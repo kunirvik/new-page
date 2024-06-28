@@ -49,6 +49,12 @@ const markup = images.map(({ preview, original, description }) => `
 const gallery = document.querySelector('.gallery');
 gallery.insertAdjacentHTML('beforeend', markup);
 
+const galleryImage = document.querySelector('.gallery__image');
+galleryImage.addEventListener('click', clickOnImage)
+
+function clickOnImage (evt) {
+    
+}
 // Add event listeners for hover effects
 document.querySelectorAll('.gallery__image').forEach(image => {
   image.addEventListener('mouseover', function() {
@@ -75,3 +81,6 @@ document.querySelectorAll('.gallery__image').forEach(image => {
       });
   });
 });
+
+
+
