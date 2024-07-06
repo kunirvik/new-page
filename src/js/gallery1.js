@@ -1,71 +1,72 @@
-import { createModal } from "./createModal";
 import { gsap } from "gsap";  
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import  'basiclightbox/dist/basicLightbox.min.css';
-import { closeModal } from "./closeModal";
+
 
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
+
 const images = [
+  
     {
       preview:
-        "../img/1.jpg",
+        "https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820__480.jpg",
       original:
         "https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820_1280.jpg",
       description: "Hokkaido Flower",
     },
     {
       preview:
-        "../img/2.jpg",
+        "https://cdn.pixabay.com/photo/2019/05/14/22/05/container-4203677__340.jpg",
       original:
         "https://cdn.pixabay.com/photo/2019/05/14/22/05/container-4203677_1280.jpg",
       description: "Container Haulage Freight",
     },
     {
       preview:
-        "../img/3.jpg",
+        "https://cdn.pixabay.com/photo/2019/05/16/09/47/beach-4206785__340.jpg",
       original:
         "https://cdn.pixabay.com/photo/2019/05/16/09/47/beach-4206785_1280.jpg",
       description: "Aerial Beach View",
     },
     {
       preview:
-        "../img/4.jpg",
+        "https://cdn.pixabay.com/photo/2016/11/18/16/19/flowers-1835619__340.jpg",
       original:
         "https://cdn.pixabay.com/photo/2016/11/18/16/19/flowers-1835619_1280.jpg",
       description: "Flower Blooms",
     },
     {
       preview:
-        "./img/5.jpg",
+        "https://cdn.pixabay.com/photo/2018/09/13/10/36/mountains-3674334__340.jpg",
       original:
         "https://cdn.pixabay.com/photo/2018/09/13/10/36/mountains-3674334_1280.jpg",
       description: "Alpine Mountains",
     },
     {
       preview:
-        "./img/6.jpg",
+        "https://cdn.pixabay.com/photo/2019/05/16/23/04/landscape-4208571__340.jpg",
       original:
         "https://cdn.pixabay.com/photo/2019/05/16/23/04/landscape-4208571_1280.jpg",
       description: "Mountain Lake Sailing",
     },
     {
       preview:
-        "./img/7.jpg",
+        "https://cdn.pixabay.com/photo/2019/05/17/09/27/the-alps-4209272__340.jpg",
       original:
         "https://cdn.pixabay.com/photo/2019/05/17/09/27/the-alps-4209272_1280.jpg",
       description: "Alpine Spring Meadows",
     },
     {
       preview:
-        "./img/8.jpg",
+        "https://cdn.pixabay.com/photo/2019/05/16/21/10/landscape-4208255__340.jpg",
       original:
         "https://cdn.pixabay.com/photo/2019/05/16/21/10/landscape-4208255_1280.jpg",
       description: "Nature Landscape",
     },
     {
       preview:
-        "./img/9.jpg",
+        "https://cdn.pixabay.com/photo/2019/05/17/04/35/lighthouse-4208843__340.jpg",
       original:
         "https://cdn.pixabay.com/photo/2019/05/17/04/35/lighthouse-4208843_1280.jpg",
       description: "Lighthouse Coast Sea",
@@ -74,11 +75,12 @@ const images = [
     
   ];
 
-  const markup = images.map(({preview, original, description}) => 
-`<li class="gallery__item">
+  const markup = images.map(({ preview, original, description}) => 
+    
+`
+<li class="gallery__item">
 <a class="gallery__link" href="${original}">
   <img
-   loading="lazy"
     class="gallery__image"
     src="${preview}"
     data-source="${original}"
@@ -97,6 +99,24 @@ const lightbox = new SimpleLightbox('.gallery a', {
     captionDelay: 250, 
   });
 
+
+  const currentIndexElement = document.querySelector('.current-index');
+const totalCountElement = document.querySelector('.total-count');
+const totalImages = images.length;
+
+lightbox.on('show.simplelightbox', countImage)
+function countImage() {
+  // Проверяем, доступен ли currentIndex в lightbox
+  if (typeof lightbox.currentIndex !== 'undefined') {
+    const currentIndex = lightbox.currentIndex + 1; // +1, так как индексация с 0
+    currentIndexElement.textContent = currentIndex;
+  } else {
+    console.error('currentIndex is not defined in lightbox');
+  }
+  totalCountElement.textContent = totalImages;
+}
+countImage();
+
 // Correct import for ScrollTrigger
 
 // Register ScrollTrigger plugin1
@@ -105,26 +125,12 @@ gsap.registerPlugin(ScrollTrigger);
 // Регистрируем плагин ScrollToPlugin
 
 const container = document.querySelector('.layout');
-const slides = document.querySelectorAll('.gallery__item');
-const contact = document.querySelector('.container');
+const slides = document.querySelectorAll('.description, .gallery__item');
+
 const containerWidth = container.offsetWidth;
 
 
-contact.addEventListener('click', onClick);
-function onClick(evt){	
-	evt.preventDefault();
-	if(evt.target.classList.contains('js-contact')){
-		console.log('Navigating');
-	  createModal()
-	  }
-	  
-	if(evt.target.classList.contains('js-model')){
 
-		console.log('Navigating to page.html');
-		window.location.href = './model.html';
-	}
-
-}
 
 
 
@@ -150,11 +156,8 @@ let tl1 = gsap.timeline({
 })
 	
 tl1.to( slides, {
-	xPercent: -100 * (slides.length - 6),
+	xPercent: -100 * (slides.length - 2),
 	ease: "none", 
 })	
 	},
 })
-	
-	
-

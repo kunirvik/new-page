@@ -253,7 +253,6 @@ class SceneManager {
     console.log('Сцена успешно инициализирована');
 
     this.addLights();
-    this.loadModel(modelPath, modelPosition, materialSettings, textureSettings);
 
     this.isMouseOver = false;
     this.continueRotationUntil = 0;
@@ -265,6 +264,7 @@ class SceneManager {
 
     window.addEventListener('resize', () => this.onWindowResize(), false);
 
+    // Инициализируем IntersectionObserver для ленивой загрузки модели
     this.intersectionObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -454,12 +454,15 @@ class SceneManager {
   }
 
   specialRenderForC5(delta) {
+
     if (!this.controls) {
       this.controls = new OrbitControls(this.camera, this.renderer.domElement);
       this.controls.enableDamping = true;
       this.controls.dampingFactor = 0.25;
       this.controls.enableZoom = true;
+      
     }
+    this.controls.target.set(10, 0, 0);
     this.controls.update();
   }
 
@@ -606,9 +609,10 @@ function createModalModel(){
  
     <div class="modal-container">
 
-    <button class="close-button">X</button>
+    <div class="wrapper-canvas"><canvas class="model5" id="c5"><canvas></div>
 
-    
+    <div class="wrapper-info">
+    <button class="close-button">X</button>
     <h1>Наши контакты</h1>
 
     <div class="contact-info">
@@ -616,7 +620,8 @@ function createModalModel(){
         <p><strong>Телефон: +380961383642</strong> <span class="phone">+7 (123) 456-7890</span></p>
         <p><strong>Email:</strong> <a href="mailto:info@example.com" class="email">info@example.com</a></p>
     </div>
-<canvas class="model5" id="c5"><canvas>
+    </div>
+
    </div>
    </div>
    `,{
@@ -631,9 +636,9 @@ function createModalModel(){
           fov: 0,
           near: 0.1,
           far: 500,
-          position: { x: 0, y: 5, z: 20 }
+          position: { x: 0, y: 0, z: 0 }
         },
-        { x: 10, y: 0, z: 0 },
+        { x: 0, y: 0, z: 0 },
         {
           color: 0xffffff,
           metalness: 0.9,

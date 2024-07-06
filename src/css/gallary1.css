@@ -1,0 +1,58 @@
+/* Лейаут */
+.layout {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Обертка */
+.wrapper {
+  display: flex;
+  flex-grow: 1;
+
+}
+
+.wrapper p {
+  font-size: 35px;
+  font-family: 'Futura PT Bold';
+}
+
+
+/* Галерея */
+.gallery {
+  height:75vh;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: end;
+  gap: 30px;
+}
+
+.gallery__item {
+  display: flex;
+  margin: 0 auto;
+  flex: 1 1 auto; 
+}
+
+.gallery__image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  min-width: 50vw;
+  min-height: 50vh;
+}
+
+/* Текст */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Futura PT Bold';
+  background-color: #0D0D0D;
+}
+
+.description{
+color: aliceblue
+;
+}
+.gallery-counter{
+  color: aliceblue;
+}

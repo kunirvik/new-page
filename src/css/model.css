@@ -98,6 +98,8 @@ position: fixed;
 
 }
 
+/*меню*/
+
   .menu {
 
     position: fixed;
@@ -139,6 +141,8 @@ position: fixed;
     display: inline-block;
     padding: 8px 12px;
   }
+
+ 
   
   .menu__items {
     position: relative;
@@ -184,6 +188,8 @@ position: fixed;
   }
 
 
+
+
   /*modal window*/
 
   .close-button {
@@ -194,8 +200,9 @@ position: fixed;
 }
 
 .modal-container {
-  display: flex;
-  flex-direction: column;
+ display:flex;
+
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   height: 50vh;
@@ -208,6 +215,9 @@ position: fixed;
 }
 
 /* Контактная информация */
+.wrapper-info{
+
+}
 h1 {
   color: #333;
   text-align: center;
