@@ -505,7 +505,7 @@ function main() {
   console.log('Запуск main функции');
   new SceneManager(
     '#c1',
-    '../models/mini.glb',
+    './models/mini.glb',
     {
       fov: 0,
       near: 0.1,
@@ -529,7 +529,7 @@ function main() {
   );
   new SceneManager(
     '#c2',
-    '../models/mini.glb',
+    './models/mini.glb',
     {
       fov: 0,
       near: 0.1,
@@ -553,7 +553,7 @@ function main() {
   );
   new SceneManager(
     '#c4',
-    '../models/logo.glb',
+    './models/logo.glb',
     {
       fov: 0,
       near: 0.1,
@@ -632,7 +632,7 @@ function createModalModel(){
        document.addEventListener('keydown', this.handler);
        document.addEventListener('click', this.handler);
        setTimeout(() => {
-        new SceneManager('#c5', '../models/mini.glb', {
+        new SceneManager('#c5', './models/mini.glb', {
           fov: 0,
           near: 0.1,
           far: 500,

@@ -15,47 +15,47 @@ function createGallery(galleryElement, images, projectName, description) {
 
 const gallery1Images = [
     {
-        preview: "../img/6.jpg"
+        preview: "./img/6.jpg"
     },
     {
-        preview: "../img/4.jpg"
+        preview: "./img/4.jpg"
     },
     {
-        preview: "../img/7.jpg",
+        preview: "./img/7.jpg",
       
     },
     {
-        preview: "../img/5.jpg"
+        preview: "./img/5.jpg"
     }
 ];
 
 const gallery2Images = [
      {
-        preview: "../img/3.jpg"
+        preview: "./img/3.jpg"
     },
     {
-        preview: "../img/4.jpg"
+        preview: "./img/4.jpg"
     },
     {
-        preview: "../img/9.jpg"
+        preview: "./img/9.jpg"
     },
     {
-        preview: "../img/11.jpg"
+        preview: "./img/11.jpg"
     }
 ];
 
 const gallery3Images = [
     {
-       preview: "../img/12.jpg"
+       preview: "./img/12.jpg"
    },
    {
-       preview: "../img/5.jpg"
+       preview: "./img/5.jpg"
    },
    {
-       preview: "../img/4.jpg"
+       preview: "./img/4.jpg"
    },
    {
-       preview: "../img/8.jpg"
+       preview: "./img/8.jpg"
    }
 ];
 const gallery1 = document.querySelector('.gallery1');
